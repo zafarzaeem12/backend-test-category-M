@@ -50,7 +50,7 @@ const Login_Existing_User = async (req,res,next) => {
         }, process.env.SECRET_KEY , { expiresIn: '1h' } )
         res.send({
              message:"Login Successful",
-             status:200,
+             status:201,
              data:{ token}
             })
        }
@@ -60,8 +60,18 @@ const Login_Existing_User = async (req,res,next) => {
     }
 }
 
-const Get_All_Users = (req, res, next) => {
-
+const Get_All_Users = async (req, res, next) => {
+    try{
+        const data = await UserModel.find().select('-password')
+        res.send({
+            total : data.length,
+            message : "Data Fetched Successfully",
+            status : 200,
+            data : data
+        })
+    }catch(err){
+        console.log(err)
+    }
 }
 
 
