@@ -13,8 +13,8 @@ router.post('/createUser' , New_Register_User);
 router.post('/login' , Login_Existing_User);
 router.get('/users' , Auth ,Get_All_Users);
 router.get('/users/:id' , Auth , Get_Specfic_User);
-router.put('/users/:id' , Update_User);
-router.delete('/users' , Delete_User);
+router.put('/users/:id' , Auth , Update_User);
+router.delete('/users/:id' ,Auth  ,Delete_User);
 
 
 module.exports = router

@@ -93,8 +93,40 @@ try{
 
 }
 
-const Update_User = (req, res, next) => {
+const Update_User = async (req, res, next) => {
+    try{
+        const id = req.params.id;
+        if(!id) {
+            res.send({
+                message:'User does not exists',
+                status:404
+            })
+        } else{
+            const UpdatedUser = await UserModel.findByIdAndUpdate(
+                { _id : id} ,
+                {
+                    $set:{
+                        name: req.body.name,
+                        username: req.body.username,
+                        mobile_no: req.body.mobile_no
+                    }
+                },
+                { new : true }
+                )
+                res.send({
+                    message:'User Data Update Successfully',
+                    status:201,
+                    data : UpdatedUser
+                })
 
+        }
+
+    }catch(err){
+        res.send({
+            message:'User does not exists',
+            status:404
+        })
+    }
 }
 
 const Delete_User = (req, res, next) => {
