@@ -129,8 +129,24 @@ const Update_User = async (req, res, next) => {
     }
 }
 
-const Delete_User = (req, res, next) => {
-
+const Delete_User = async (req, res, next) => {
+    const id = req.params.id ;
+try{
+  const Delete_user =  await UserModel.deleteOne({ _id : id});
+  console.log('Delete_user',Delete_user)
+  Delete_user.acknowledged === true &&  Delete_user.deletedCount === 1 ?
+  res.send({
+    message : "User Deleted Successfully",
+    status : 204,
+  }) 
+  : 
+  res.send({
+    message : "User Not Found",
+    status : 404,
+  }) 
+}catch(err){
+    console.log(err)
+}
 }
 
 module.exports = {
