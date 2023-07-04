@@ -75,7 +75,21 @@ const Get_All_Users = async (req, res, next) => {
 }
 
 
-const Get_Specfic_User = (req, res, next) => {
+const Get_Specfic_User = async (req, res, next) => {
+    const id = req.params.id;
+try{
+    const One_User = await UserModel.findById({_id : id});
+    res.send({
+        message:`User Data Fetched`,
+        status:200,
+        data: One_User
+    })
+}catch(err){
+    res.send({
+        message:`User Not Found`,
+        status:404
+    })
+}
 
 }
 
